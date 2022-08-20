@@ -21,7 +21,16 @@ const getPosts = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const getPost = (req, res) => {};
+const getPost = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const { id } = req;
+    const data = await postsModel.findById(id);
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_GET_POST");
+  }
+};
 
 /**
  * Crear un post
@@ -43,6 +52,15 @@ const createPost = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const deletePost = (req, res) => {};
+const deletePost = async (req, res) => {
+  try {
+    req = matchedData(req);
+    const { id } = req;
+    const data = await postsModel.deleteOne({ _id: id });
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_DELETE_POST");
+  }
+};
 
 module.exports = { getPosts, getPost, createPost, deletePost };
