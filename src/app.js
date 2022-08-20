@@ -9,7 +9,7 @@ app.use(cors());
 const port = process.env.PORT || 9000;
 
 /* Acá invoco las rutas */
-app.use("/api", require("./routes/posts"));
+app.use("/api", require("./routes/index"));
 
 // mongodb connection
 dbConnect();

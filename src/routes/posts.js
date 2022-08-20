@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const { getPosts, getPost } = require("../controllers/posts");
 
 //TODO http://localhost/posts GET, POST, DELETE, PUT (CRUD)
 
-router.get("/posts", (req, res) => {
-  const data = ["hola", "mundo"];
-  res.send({ data });
-});
+router.get("/", getPosts);
+
+router.get("/:id", getPost);
 
 module.exports = router;
