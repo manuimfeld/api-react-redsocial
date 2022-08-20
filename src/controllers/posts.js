@@ -1,4 +1,6 @@
 const { postsModel } = require("../models");
+const { handleHttpError } = require("../helpers/handleError");
+const { matchedData } = require("express-validator");
 
 /**
  * Obtener lista de la base de datos
@@ -6,8 +8,12 @@ const { postsModel } = require("../models");
  * @param {*} res
  */
 const getPosts = async (req, res) => {
-  const data = await postsModel.find({});
-  res.send({ data });
+  try {
+    const data = await postsModel.find({});
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_GET_POSTS");
+  }
 };
 
 /**
@@ -23,9 +29,13 @@ const getPost = (req, res) => {};
  * @param {*} res
  */
 const createPost = async (req, res) => {
-  const body = req.body;
-  const data = await postsModel.create(body);
-  res.send({ data });
+  try {
+    const body = matchedData(req); // matchedData elimina campos que están de más (no especificados) en el body POST
+    const data = await postsModel.create(body);
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_CREATE_POST");
+  }
 };
 
 /**

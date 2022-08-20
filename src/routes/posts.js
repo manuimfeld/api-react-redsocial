@@ -10,6 +10,6 @@ router.get("/", getPosts);
 
 router.get("/:id", getPost);
 
-router.post("/", validatorCreatePost, customHeader, createPost);
+router.post("/", validatorCreatePost, createPost);
 
 module.exports = router;
