@@ -10,4 +10,6 @@ const port = process.env.PORT || 9000;
 
 // mongodb connection
 dbConnect();
-app.listen(port, () => console.log("server listening on port", port));
+app.listen(port, () =>
+  console.log("La api está escuchando por el puerto: ", port)
+);
