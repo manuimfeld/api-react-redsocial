@@ -1,10 +1,12 @@
+const { postsModel } = require("../models");
+
 /**
  * Obtener lista de la base de datos
  * @param {*} req
  * @param {*} res
  */
-const getPosts = (req, res) => {
-  const data = ["hola", "mundo"];
+const getPosts = async (req, res) => {
+  const data = await postsModel.find({});
   res.send({ data });
 };
 
@@ -20,7 +22,11 @@ const getPost = (req, res) => {};
  * @param {*} req
  * @param {*} res
  */
-const createPost = (req, res) => {};
+const createPost = async (req, res) => {
+  const body = req.body;
+  const data = await postsModel.create(body);
+  res.send({ data });
+};
 
 /**
  * Borrar un post

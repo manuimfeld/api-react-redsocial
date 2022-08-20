@@ -11,4 +11,4 @@ const PostsScheme = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("posts", UserScheme);
+module.exports = mongoose.model("posts", PostsScheme);
