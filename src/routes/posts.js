@@ -4,26 +4,45 @@ const {
   validatorCreatePost,
   validatorGetPost,
 } = require("../validators/posts");
-const customHeader = require("../middleware/customHeader");
+const authMiddleware = require("../middleware/session");
 const {
   getPosts,
   getPost,
   createPost,
   deletePost,
 } = require("../controllers/posts");
+const checkRol = require("../controllers/rol");
 
 //TODO http://localhost/posts GET, POST, DELETE, PUT (CRUD)
 
 // GET POSTS
-router.get("/", getPosts);
+router.get("/", authMiddleware, checkRol(["user", "admin"]), getPosts);
 
 // GET POST
-router.get("/:id", validatorGetPost, getPost);
+router.get(
+  "/:id",
+  authMiddleware,
+  checkRol(["user", "admin"]),
+  validatorGetPost,
+  getPost
+);
 
 // Create POST
-router.post("/", validatorCreatePost, createPost);
+router.post(
+  "/",
+  authMiddleware,
+  checkRol(["user", "admin"]),
+  validatorCreatePost,
+  createPost
+);
 
 // Delete POST
-router.delete("/:id", validatorGetPost, deletePost);
+router.delete(
+  "/:id",
+  authMiddleware,
+  checkRol(["admin"]),
+  validatorGetPost,
+  deletePost
+);
 
 module.exports = router;
