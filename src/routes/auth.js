@@ -1,21 +1,12 @@
 const express = require("express");
-const { matchedData } = require("express-validator");
-const { encrypt, compare } = require("../helpers/handlePassword");
-const { usersModel } = require("../models");
 const router = express.Router();
+const { registerCtrl, loginCtrl } = require("../controllers/auth");
 const { validatorRegister, validatorLogin } = require("../validators/auth");
 
 // http://localhost:3001/api/auth/register
-router.post("/register", validatorRegister, async (req, res) => {
-  req = matchedData(req);
-  const password = await encrypt(req.password);
-  const body = { ...req, password };
-  const data = await usersModel.create(body);
-  data.set("password", undefined, { strict: false });
-  res.send({ data });
-});
+router.post("/register", validatorRegister, registerCtrl);
 
 // http://localhost:3001/api/auth/login
-/* router.post("/login", (req, req) => {}); */
+router.post("/login", validatorLogin, loginCtrl);
 
 module.exports = router;
