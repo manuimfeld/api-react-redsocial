@@ -10,15 +10,16 @@ const {
   getPost,
   createPost,
   deletePost,
+  getPostUser,
 } = require("../controllers/posts");
 const checkRol = require("../controllers/rol");
 
 //TODO http://localhost/posts GET, POST, DELETE, PUT (CRUD)
 
-// GET POSTS
+// GET all Posts
 router.get("/", authMiddleware, checkRol(["user", "admin"]), getPosts);
 
-// GET POST
+// GET Post for id
 router.get(
   "/:id",
   authMiddleware,
@@ -26,6 +27,9 @@ router.get(
   validatorGetPost,
   getPost
 );
+
+// GET Posts by user
+router.get("/user/:id", getPostUser);
 
 // Create POST
 router.post(

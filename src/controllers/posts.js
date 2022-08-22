@@ -2,11 +2,7 @@ const { postsModel } = require("../models");
 const { handleHttpError } = require("../helpers/handleError");
 const { matchedData } = require("express-validator");
 
-/**
- * Obtener lista de la base de datos
- * @param {*} req
- * @param {*} res
- */
+// Get Posts
 const getPosts = async (req, res) => {
   try {
     const data = await postsModel.find({});
@@ -16,11 +12,7 @@ const getPosts = async (req, res) => {
   }
 };
 
-/**
- * Obtener una publicacion
- * @param {*} req
- * @param {*} res
- */
+// Get Post
 const getPost = async (req, res) => {
   try {
     req = matchedData(req);
@@ -32,11 +24,18 @@ const getPost = async (req, res) => {
   }
 };
 
-/**
- * Crear un post
- * @param {*} req
- * @param {*} res
- */
+// Get Posts by a user
+const getPostUser = async (req, res) => {
+  try {
+    const { id } = req.params; // params es lo que contiene la url despues de la ruta original ejemplo: api/posts/user/{id}
+    const data = await postsModel.find({ postedByUser: { $eq: id } }); // busco todos los posts que tengan el mismo postedByUser
+    res.send({ data });
+  } catch (e) {
+    handleHttpError(res, "ERROR_USER_ID_NOT_FOUND", 404);
+  }
+};
+
+// POST create Post
 const createPost = async (req, res) => {
   try {
     /*  const user = req.user; // qué user es el que está haciendo esta peticion */
@@ -50,11 +49,7 @@ const createPost = async (req, res) => {
   }
 };
 
-/**
- * Borrar un post
- * @param {*} req
- * @param {*} res
- */
+// DELETE delete Post
 const deletePost = async (req, res) => {
   try {
     req = matchedData(req);
@@ -66,4 +61,4 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { getPosts, getPost, createPost, deletePost };
+module.exports = { getPosts, getPost, getPostUser, createPost, deletePost };
