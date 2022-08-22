@@ -39,7 +39,10 @@ const getPost = async (req, res) => {
  */
 const createPost = async (req, res) => {
   try {
-    const body = matchedData(req); // matchedData elimina campos que están de más (no especificados) en el body POST
+    /*  const user = req.user; // qué user es el que está haciendo esta peticion */
+    /*  const body = matchedData(req); matchedData elimina campos que están de más (no especificados) en el body POST */
+    /*  const data = await postsModel.create(body); */
+    const body = { content: req.body.content, postedByUser: req.user.username };
     const data = await postsModel.create(body);
     res.send({ data });
   } catch (e) {

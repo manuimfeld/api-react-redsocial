@@ -5,7 +5,6 @@ const dbConnect = require("./config/mongo");
 const app = express();
 
 app.use(cors());
-app.use(express.json());
 
 const port = process.env.PORT || 9000;
 
