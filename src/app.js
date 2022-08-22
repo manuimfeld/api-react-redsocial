@@ -5,6 +5,7 @@ const dbConnect = require("./config/mongo");
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 const port = process.env.PORT || 9000;
 
@@ -13,6 +14,6 @@ app.use("/api", require("./routes/index"));
 
 // mongodb connection
 dbConnect();
-app.listen(port, () =>
+app.listen(port, "192.168.0.71", () =>
   console.log("La api está escuchando por el puerto: ", port)
 );
