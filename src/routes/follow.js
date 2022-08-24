@@ -4,7 +4,7 @@ const checkRol = require("../controllers/rol");
 const authMiddleware = require("../middleware/session");
 const router = express.Router();
 
-// http://localhost:3001/api/auth/login
+// POST follow user
 router.post("/:id", authMiddleware, checkRol(["user", "admin"]), followUser);
 
 module.exports = router;
