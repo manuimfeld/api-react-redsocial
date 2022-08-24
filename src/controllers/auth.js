@@ -3,9 +3,16 @@ const { tokenSign } = require("../helpers/handleJwt");
 const { encrypt, compare } = require("../helpers/handlePassword");
 const { usersModel } = require("../models");
 const { handleHttpError } = require("../helpers/handleError");
+const { userExist } = require("../helpers/handleUserExist");
 
 // Controlador que registra el usuario
 const registerCtrl = async (req, res) => {
+  // Checkea si el username o el email ya existe
+  const userAlreadyExist = await userExist(req, res);
+  if (userAlreadyExist !== false) {
+    return handleHttpError(res, userAlreadyExist);
+  }
+
   try {
     req = matchedData(req);
     const password = await encrypt(req.password);

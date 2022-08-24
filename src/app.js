@@ -14,6 +14,8 @@ app.use("/api", require("./routes/index"));
 
 // mongodb connection
 dbConnect();
-app.listen(port, "192.168.0.71", () =>
-  console.log("La api está escuchando por el puerto: ", port)
+app.listen(
+  port,
+  /* "192.168.0.70", */ () =>
+    console.log("La api está escuchando por el puerto: ", port)
 );
