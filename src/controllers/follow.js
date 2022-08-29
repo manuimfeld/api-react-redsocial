@@ -4,7 +4,7 @@ const { handleHttpError } = require("../helpers/handleError");
 // POST Follow user
 const followUser = async (req, res) => {
   try {
-    const user = req.user.id; // ID del nuevo seguidor
+    const user = req.user.username; // ID del nuevo seguidor
     const { id } = req.params; // ID del usuario a seguir
 
     if (user === id.trim()) {
@@ -21,15 +21,15 @@ const followUser = async (req, res) => {
 };
 
 // GET user followers
-const userFollow = async (req, res) => {
-  const { id } = req.params; // ID del usuario al que siguen personas
+const userFollowers = async (req, res) => {
+  const { id } = req.params; // ID del usuario al que se buscan sus seguidores
 
   try {
-    const data = await followModel.find({ follow: id }); // Find todos los que sigan a ID
+    const data = await followModel.find({ follower: { $eq: id.trim() } });
     res.send({ data });
   } catch (e) {
     handleHttpError(res, "USER_NOT_FOUND", 404);
   }
 };
 
-module.exports = { followUser, userFollow };
+module.exports = { followUser, userFollowers };
